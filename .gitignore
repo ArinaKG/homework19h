@@ -1,0 +1,6 @@
+/.idea
+../homework19/dao/__pycache__
+helpers/__pycache__
+../homework19/views/__pycache__
+.DS_Store
+__pycache__
