@@ -19,7 +19,7 @@ class AuthService:
         if user is None:
             abort(400)
         if not is_refresh:
-            if not self.user_service.comprare_password(user.password, password)
+            if not self.user_service.comprare_password(user.password, password):
                 abort(400)
 
         data = {

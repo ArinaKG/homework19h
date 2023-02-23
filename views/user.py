@@ -25,7 +25,7 @@ class UserView(Resource):
 
 @user_ns.route('<int:uid>')
 class UserView(Resource):
-
+    @auth_required
     def get(self, uid):
         user = user_service.get_one(uid)
 
@@ -33,16 +33,16 @@ class UserView(Resource):
 
         return user_schema, 200
 
+    @role_required
     def post(self, uid):
         req_json = request.json
-
         if 'id' not in req_json:
             req_json['id'] = uid
-
         user_service.update(req_json)
+        return 'update', 204
 
 
+    @role_required
     def delete(self, uid):
         user_service.delete(uid)
-
-        return '', 204
+        return 'delete', 204

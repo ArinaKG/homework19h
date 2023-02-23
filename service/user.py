@@ -1,6 +1,7 @@
 import base64
 import hashlib
 import hmac
+import jwt
 
 from dao.user import UserDAO
 from helpers.constants import PWD_HASH_ITERATIONS, PWD_HASH_SALT
@@ -33,7 +34,7 @@ class UserService:
         return base64.b64encode(hash_digest)
 
     def comprare_password(self, hash, password):
-        decode_digest = hashlib.pbkdf2_hmac(hash)
+        decode_digest = base64.b64decode(hash)
 
         hash_digest = hashlib.pbkdf2_hmac(
             'sha256',
@@ -53,3 +54,5 @@ class UserService:
         user_d['password'] = self.get_hash(user_d['password'])
 
         return self.dao.update(user_d)
+
+    def admin_required(self, func):
